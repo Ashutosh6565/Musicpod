@@ -129,9 +129,81 @@ class App extends React.Component {
   }
 
   //toggle song play and puse
+togglePlayPause = () =>{
+  if(this.state.currentmenu === -2){return}
+  if(this.state.playing === true){
+    this.setState({playing:false});
+    this.state.audio.pause();
+  }
+  if(this.state.playing===false){
+    this.setState({playing:true});
+    this.state.audio.play();
+  }
+}
+//function for : udate active menu while rotating on the track -wheel
+  updateActiveMenu = (direction,menu) => {
+    if(menu !== -1 && menu !== 1 && menu !== 4 && menu !== 8 && menu !== 9 && menu !== 10){
+      return;
+    }
+    let min = 0;
+    let max = 0;
+    max = this.state.lengthMenuKey[menu];
+    if(direction === 1){
+      if(this.state.active >= max){
+        this.setState({active:min})
+      }else{
+        this.setState({active:this.state.active+1})
+      }
+    }else{
+      if(this.state.active <= min){
+        this.setState({active:max});
+      }else{
+        this.setState({active:this.state.active-1})
+      }
+    }
+  }
 
+    //fuction for updating the theme of th code 
+
+    setTheme =(id) => {
+      let theme = ""
+      if(id == 0){
+        theme = " #f0f0f0"
+      }else if(id === 1){
+        theme = "#555d50"
+      }else if(id === 2){
+        theme = "#D1CDDA";
+      }else if (id === 3){
+        theme = "#c4aeead";
+      }
+      this.setState({theme:theme,noty:true,notifyText:"Theme changed"}) /// for the notifiction
+      return;
+    }
+    //function for the wallpaper
+
+    setWallpaper = (id) => {
+      this.setState({wallpaper:id,noty:true,notifyText:"Wallpaper changed"});
+      return;
+    }
+
+
+    setWheelColor = (id) => {
+      let wheelColor = ""
+      if(id === 0){
+        wheelColor = "#212121"
+      }else if(id === 1){
+        wheelColor = "White"
+      }else if(id === 2){
+        wheelColor = "#3E2723"
+      }else if(id === 3){
+        wheelColor = "#3D5AFE"
+      }
+      this.setState({wheelColor : wheelColor, noty:true,notifyText: "Wheele color is changed"})
+    }
 
   
+
+
   render() {
     return (
       <>
